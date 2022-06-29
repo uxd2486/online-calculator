@@ -29,3 +29,12 @@ function operate(operator, num1, num2) {
             return divide(num1, num2);
     }
 }
+
+function display(char, append) {
+    const display = document.querySelector(".display");
+    if (append){
+        display.textContent = display.textContent + char.toString();
+    } else {
+        display.textContent = char.toString();
+    }
+}
