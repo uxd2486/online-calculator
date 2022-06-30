@@ -38,3 +38,18 @@ function display(char, append) {
         display.textContent = char.toString();
     }
 }
+
+function modifyDisplay() {
+    const id = this.id;
+    if (id === "clear"){
+        display("", false);
+    } else if (Number.isInteger(id)){
+        display(id, true);
+    } else {
+        display(this.textContent, true);
+    }
+}
+
+const buttons = document.querySelectorAll(".buttons button");
+buttons.forEach(button => button.addEventListener(
+    "click", modifyDisplay));
