@@ -42,10 +42,26 @@ function display(char, append) {
 function modifyDisplay() {
     const id = this.id;
     if (id === "clear"){
+        num1 = "";
+        num2 = "";
+        operator = "";
         display("", false);
-    } else if (Number.isInteger(id)){
+    } else if (id === "=") {
+        if (operator === "" || num1 === ""
+        || num2 === ""){
+            return;
+        }
+        display(Number(operate(operator, parseInt(num1), parseInt(num2))),
+            false);
+    } else if (!isNaN(id)){
+        if (operator === ""){
+            num1 += id;
+        } else {
+            num2 += id;
+        }
         display(id, true);
     } else {
+        operator = this.textContent;
         display(this.textContent, true);
     }
 }
@@ -53,3 +69,7 @@ function modifyDisplay() {
 const buttons = document.querySelectorAll(".buttons button");
 buttons.forEach(button => button.addEventListener(
     "click", modifyDisplay));
+
+let num1 = "";
+let num2 = "";
+let operator = "";
