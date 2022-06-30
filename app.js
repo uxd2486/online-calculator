@@ -47,8 +47,7 @@ function modifyDisplay() {
         operator = "";
         display("", false);
     } else if (id === "=") {
-        if (operator === "" || num1 === ""
-        || num2 === ""){
+        if (operator === "" || num1 === "" || num2 === ""){
             return;
         }
         display(Number(operate(operator, parseInt(num1), parseInt(num2))),
@@ -61,6 +60,11 @@ function modifyDisplay() {
         }
         display(id, true);
     } else {
+        if (operator !== ""){
+            num1 = operate(operator, parseInt(num1), parseInt(num2));
+            display(num1, false);
+            num2 = "";
+        }
         operator = this.textContent;
         display(this.textContent, true);
     }
