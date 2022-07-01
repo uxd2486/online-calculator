@@ -39,19 +39,28 @@ function display(char, append) {
     }
 }
 
+function clear() {
+    num1 = "";
+    num2 = "";
+    operator = "";
+}
+
 function modifyDisplay() {
     const id = this.id;
     if (id === "clear"){
-        num1 = "";
-        num2 = "";
-        operator = "";
+        clear();
         display("", false);
     } else if (id === "=") {
         if (operator === "" || num1 === "" || num2 === ""){
             return;
         }
-        display(Number(operate(operator, parseInt(num1), parseInt(num2))),
-            false);
+        const num = Number(operate(operator, parseInt(num1), parseInt(num2)));
+        if (isNaN(num)){
+            display("nice try", false);
+            clear();
+        } else {
+            display(num, false);
+        }
     } else if (!isNaN(id)){
         if (operator === ""){
             num1 += id;
@@ -60,10 +69,20 @@ function modifyDisplay() {
         }
         display(id, true);
     } else {
+        if (operator === "" && num1 === ""){
+            display("", false);
+            return;
+        }
         if (operator !== ""){
-            num1 = operate(operator, parseInt(num1), parseInt(num2));
-            display(num1, false);
-            num2 = "";
+            const num = Number(operate(operator, parseInt(num1), parseInt(num2)));
+            if (isNaN(num)){
+                display("nice try", false);
+                clear();
+            } else {
+                display(num, false);
+                num1 = num;
+                num2 = "";
+            }
         }
         operator = this.textContent;
         display(this.textContent, true);
